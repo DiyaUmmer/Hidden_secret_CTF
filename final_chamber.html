@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Final Chamber | Hogwarts CTF</title>
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'MedievalSharp', cursive;
+            background-image: url("{{ url_for('static', filename='images/final_chamber.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            color: #f2f2f2;
+            text-align: center;
+            min-height: 100vh;
+            backdrop-filter: brightness(0.6);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #ffd700;
+            text-shadow: 2px 2px 5px #000;
+            margin-bottom: 10px;
+        }
+
+        form {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 30px;
+            border-radius: 15px;
+            display: inline-block;
+        }
+
+        input[type="text"] {
+            width: 300px;
+            padding: 10px;
+            margin: 10px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 10px;
+            background: #b8860b;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #daa520;
+        }
+
+        .flag-box {
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            animation: glow 1.5s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 10px #ffd700; }
+            to { box-shadow: 0 0 20px #ffffff; }
+        }
+
+        .error {
+            color: #ff6666;
+            font-weight: bold;
+        }
+
+        .flag-text {
+            font-size: 1.5em;
+            color: #00ffcc;
+            text-shadow: 1px 1px 5px black;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🏰 Final Chamber of Hogwarts 🏰</h1>
+
+    {% if real_flag %}
+        <div class="flag-box">
+            <h2>✨ Congratulations! ✨</h2>
+            <p class="flag-text">The true flag of Hogwarts is:</p>
+            <p class="flag-text"><strong>{{ real_flag }}</strong></p>
+        </div>
+    {% else %}
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        <form method="POST">
+            <input type="text" name="gryffindor" placeholder="Enter Flag"><br>
+            <input type="text" name="ravenclaw" placeholder="Enter Flag"><br>
+            <input type="text" name="hufflepuff" placeholder="Enter Flag"><br>
+            <input type="text" name="slytherin" placeholder="Enter Flag"><br>
+            <button type="submit">Reveal the Final Flag</button>
+        </form>
+    {% endif %}
+
+    <div id="timer" style="font-size: 18px; font-weight: bold; position: fixed; top: 10px; right: 10px; background: #222; color: #fff; padding: 8px 12px; border-radius: 5px; z-index: 1000;">
+    Time left: 10:00
+  </div>
+  
+  <script src="static/js/timer.js"></script>
+
+</body>
+</html>

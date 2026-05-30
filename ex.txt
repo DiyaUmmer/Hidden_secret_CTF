@@ -1,0 +1,6 @@
+harry:hermoine
+slytherin:snake
+ravenclaw: brave
+eagle_eye:wisdom42
+wit:intelligence
+power:brain

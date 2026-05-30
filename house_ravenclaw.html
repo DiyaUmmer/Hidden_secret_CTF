@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ravenclaw Tower</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            background-image: url('{{ url_for("static", filename="images/ravenclaw_bg.jpg") }}');
+            background-size: cover;
+            background-position: center;
+            color: #f0f8ff;
+            font-family: 'Georgia', serif;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 50, 0.7);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            margin: 100px auto;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(90, 155, 216, 0.6);
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: none;
+            width: 80%;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #5a9bd8;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .popup {
+            display: none;
+            background-color: #1e1e2f;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #5a9bd8;
+            position: fixed;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            box-shadow: 0 0 20px rgba(90, 155, 216, 0.8);
+            font-size: 1.2rem;
+        }
+
+        a {
+            color: #aecfff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🦅 Ravenclaw Tower</h2>
+        <p>“A riddle guards the entrance. Answer wisely.”</p>
+
+        <form id="ravenForm">
+            <label>"Silent by birth, I repeat what I'm fed.
+Used in shells, where secrets are bled.
+Harmless I seem, yet I aid injection,
+Reflecting input without protection.
+In loops I chant, in exploits I hide,
+One word, five letters, command-line guide.
+What am I?"</label><br>
+            <input type="text" name="challenge_token" id="challenge_token" placeholder="Your Answer">
+            <br>
+            <button type="submit">Submit</button>
+        </form>
+
+        <p><a href="{{ url_for('login') }}">🔙 Back to Login</a></p>
+    </div>
+
+    <div class="popup" id="flagPopup"></div>
+
+    <script>
+        document.getElementById('ravenForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const token = document.getElementById('challenge_token').value;
+
+            const res = await fetch('/ravenclaw', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `challenge_token=${encodeURIComponent(token)}`
+            });
+
+            const data = await res.json();
+            if (data.flag) {
+                const popup = document.getElementById('flagPopup');
+                popup.textContent = data.flag;
+                popup.style.display = 'block';
+            } else {
+                alert(data.error || '❌ Incorrect answer.');
+            }
+        });
+    </script>
+
+    <div id="timer" style="font-size: 18px; font-weight: bold; position: fixed; top: 10px; right: 10px; background: #222; color: #fff; padding: 8px 12px; border-radius: 5px; z-index: 1000;">
+    Time left: 10:00
+  </div>
+  
+  <script src="static/js/timer.js"></script>
+  
+</body>
+</html>

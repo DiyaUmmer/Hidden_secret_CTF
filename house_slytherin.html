@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Slytherin Dungeon</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            background-image: url('{{ url_for("static", filename="images/slytherin_bg.jpg") }}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            color: #e0e0e0;
+            font-family: 'Georgia', serif;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 600px;
+            margin: 100px auto;
+            box-shadow: 0 0 15px rgba(0,255,0,0.3);
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border-radius: 5px;
+            width: 80%;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: #2f8f2f;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .result-box {
+            background: #111;
+            padding: 20px;
+            margin-top: 20px;
+            border: 2px solid #39ff14;
+        }
+
+        .error-msg {
+            color: red;
+        }
+
+        .success-msg {
+            color: #00ff88;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🐍 Slytherin Dungeon – Forbidden Scroll Access</h2>
+        <p>Enter the scroll name to uncover its secrets.</p>
+
+        <form method="POST">
+            <input type="text" name="scroll_name" >
+            <br>
+            <button type="submit">Read Scroll</button>
+        </form>
+
+        {% if content %}
+            <div class="result-box">
+                <strong>Scroll Content:</strong><br>
+                <pre>{{ content }}</pre>
+            </div>
+        {% elif error %}
+            <p class="error-msg">{{ error }}</p>
+        {% endif %}
+
+        {% if flag_found %}
+            <p class="success-msg">✅ You've uncovered the true flag of Slytherin!</p>
+        {% endif %}
+
+        <p><a href="{{ url_for('login') }}">🔙 Return to Login Portal</a></p>
+    </div>
+    <div id="timer" style="font-size: 18px; font-weight: bold; position: fixed; top: 10px; right: 10px; background: #222; color: #fff; padding: 8px 12px; border-radius: 5px; z-index: 1000;">
+    Time left: 10:00
+  </div>
+  
+  <script src="static/js/timer.js"></script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hufflepuff Basement</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            background-image: url("{{ url_for('static', filename='images/hufflepuff_bg.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: 'Georgia', serif;
+            color: #000;
+        }
+
+        .container {
+            background: rgba(255, 253, 208, 0.95);
+            border: 3px solid #deb887;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 50px auto;
+            width: 80%;
+            max-width: 700px;
+            box-shadow: 0 0 20px 5px gold;
+        }
+
+        .flag-option {
+            background: #f3e5ab;
+            padding: 10px 15px;
+            margin: 8px 0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            border: 1px solid #b8860b;
+        }
+
+        .flag-option:hover {
+            background: #ffe066;
+        }
+
+        button {
+            background-color: #d2b48c;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #c19a6b;
+        }
+
+        .success-msg {
+            color: green;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .decoy-section {
+            margin-top: 20px;
+            font-style: italic;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🦡 Hufflepuff Basement</h2>
+        <p>We value loyalty, but only those who observe carefully shall be rewarded.</p>
+
+        <form method="POST" id="huffForm" onsubmit="return validatePuzzle();">
+            <div id="puzzleSection">
+                <label>Solve this riddle to prove your loyalty:</label><br>
+                <strong>Unscramble: YTOALLL</strong><br>
+                <input type="text" name="puzzle_answer" id="puzzle_answer" placeholder="Your Answer" required>
+                <button type="submit">Check</button>
+            </div>
+
+            {% if show_flags %}
+            <div id="flagOptions" style="margin-top: 20px;">
+                <p>Select the correct flag:</p>
+                <div class="flag-option" onclick="handleFlag('Huf{loyal_bbadger_19}')">Huf{loyal_bbadger_19}</div>
+                <div class="flag-option" onclick="handleFlag('Huf{badger_loyalty_5}')">Huf{badger_loyalty_5}</div>
+                <div class="flag-option" onclick="handleFlag('Huf{earth_burrow_14}')">Huf{earth_burrow_14}</div>
+                <div class="flag-option" onclick="handleFlag('Huf{loyalty_is_power_86}')">Huf{loyalt_is_power_86}</div>
+                <div class="flag-option" onclick="handleFlag('Huf{loyal_earth_burrow_powerful_badger_21}')">Huf{loyal_earth_burrow_powerful_badger}</div>
+            </div>
+            {% endif %}
+        </form>
+
+        {% if result %}
+        <p class="success-msg">{{ result }}</p>
+        {% endif %}
+
+        <p><a href="{{ url_for('login') }}">🔙 Return to Login Portal</a></p>
+    </div>
+
+    <div id="timer" style="font-size: 18px; font-weight: bold; position: fixed; top: 10px; right: 10px; background: #222; color: #fff; padding: 8px 12px; border-radius: 5px; z-index: 1000;">
+        Time left: 10:00
+    </div>
+
+    <script src="{{ url_for('static', filename='js/timer.js') }}"></script>
+    <script>
+        function validatePuzzle() {
+            const answer = document.getElementById('puzzle_answer').value.trim().toLowerCase();
+            return answer === 'loyalty'; // Only allow submission if answer is correct
+        }
+
+        function handleFlag(value) {
+            if (value === "Huf{badger_loyalty_5}") {
+                alert("✅ Correct! You’ve earned the Hufflepuff flag: " + value);
+            } else {
+                window.location.href = "{{ url_for('login') }}";
+            }
+        }
+    </script>
+</body>
+</html>

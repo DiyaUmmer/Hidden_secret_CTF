@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hogwarts House Portal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        #timer {
+            font-size: 18px;
+            font-weight: bold;
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #222;
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 5px;
+            z-index: 1000;
+        }
+
+        body {
+            transition: background-color 0.5s ease;
+        }
+    </style>
+</head>
+<body class="gryffindor-bg" id="mainBody">
+    <div class="container">
+        <h1>🧙‍♂️ Welcome to the Hogwarts House Gateway 🧙‍♀️</h1>
+
+        <form method="POST">
+            <label for="username">Username / Puzzle Answer / Token:</label><br>
+            <input type="text" name="username" id="username"><br>
+
+            <label for="password">Password :</label><br>
+            <input type="password" name="password" id="password"><br>
+
+            <label for="house">Enter House Name:</label><br>
+            <input type="text" name="house" id="house" placeholder="gryffindor / ravenclaw / hufflepuff / slytherin" oninput="changeBackground()"><br>
+
+            <button type="submit">Enter the House</button>
+        </form>
+
+        {% if error %}
+            <p class="error-msg">{{ error }}</p>
+        {% endif %}
+
+        <p>SGFycnl7YnI0dmVfcGw0eWVyfQ==</p>
+
+        {% if session.gryffindor and session.ravenclaw and session.hufflepuff and session.slytherin %}
+            <p style="margin-top:20px;">
+                <a href="{{ url_for('final_chamber') }}" style="color: gold; font-size: 18px;">✨ Collected? Enter Final Chamber ✨</a>
+            </p>
+        {% else %}
+            <p style="margin-top:20px;">🧩 Unlock the Final Chamber with a twist.</p>
+        {% endif %}
+    </div>
+    <span style="display:none;"> badger:cupcake</span>
+    <script>
+        // Change background color based on house input
+        function changeBackground() {
+            const body = document.getElementById("mainBody");
+            const house = document.getElementById("house").value.toLowerCase().trim();
+
+            body.className = "";  // Reset any existing classes
+
+            if (house === "gryffindor") {
+                body.classList.add("gryffindor-bg");
+            } else if (house === "ravenclaw") {
+                body.classList.add("ravenclaw-bg");
+            } else if (house === "hufflepuff") {
+                body.classList.add("hufflepuff-bg");
+            } else if (house === "slytherin") {
+                body.classList.add("slytherin-bg");
+            }
+        }
+    </script>
+ <div id="timer" style="font-size: 18px; font-weight: bold; position: fixed; top: 10px; right: 10px; background: #222; color: #fff; padding: 8px 12px; border-radius: 5px; z-index: 1000;">
+    Time left: 10:00
+  </div>
+  
+  <script src="static/js/timer.js"></script>
+</body>
+</html>
