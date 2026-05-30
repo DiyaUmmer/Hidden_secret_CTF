@@ -41,13 +41,13 @@ A Flask-based cybersecurity Capture The Flag (CTF) platform designed to demonstr
 ## Screenshots
 
 ### Home Page
-![Home Page](screenshots/home.png)
+![Home Page](home.png)
 
 ### Challenge Interface
-![Challenge Interface](screenshots/challenge.png)
+![Challenge Interface](challenge.png)
 
 ### Flag Popup
-![Flag Popup](screenshots/flag.png)
+![Flag Popup](flag.png)
 ---
 
 ## Educational Purpose
